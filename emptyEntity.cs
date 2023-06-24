@@ -12,5 +12,10 @@ namespace Practice
         {
             //Ничего не делает
         }
+
+        public emptyEntity()
+        {
+            Type = "emptyEntity";
+        }
     }
 }

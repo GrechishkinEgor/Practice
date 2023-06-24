@@ -13,12 +13,12 @@ namespace Practice
         protected int y = 0;
 
         //Свойства класса для изменения координат. Возможно переопределение свойств
-        virtual public int X 
+        public virtual int X 
         {
             get => x; 
             set  { if (value >= 0)  x = value; }
         }
-        virtual public int Y
+        public virtual int Y
         {
             get => y;
             set { if (value >= 0) y = value; }
@@ -29,7 +29,11 @@ namespace Practice
         public field EntityBase
         {
             get => entityBase;
-            set { entityBase = value; }
+            set 
+            { 
+                entityBase = value;
+                value.AddEntity(this);
+            }
         }
 
         //Тип сущности. При наследовании необходимо изменить значение

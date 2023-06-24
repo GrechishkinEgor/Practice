@@ -19,5 +19,10 @@ namespace Practice
         {
             //Еда ничего не делает
         }
+
+        public food()
+        {
+            Type = "food";
+        }
     }
 }

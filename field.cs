@@ -6,31 +6,35 @@ using System.Threading.Tasks;
 
 namespace Practice
 {
-    internal class field
+    internal abstract class field
     {
-        protected entity[,] entityMatrix = { };
-        public entity[,] EntityMatrix
+        public entity[,] EntityMatrix { get; } = { };
+
+        public field(int width, int height)
         {
-            get => entityMatrix;
+            EntityMatrix = new entity[width, height];
+            for (int i = 0; i < width; i++)
+                for (int j = 0; j < height; j++)
+                    EntityMatrix[i, j] = new emptyEntity();
         }
 
         public virtual void DoBeat()
         {
-            foreach (entity someEntity in entityMatrix)
+            foreach (entity someEntity in EntityMatrix)
                 someEntity.BeatAction();
         }
         public virtual void MoveEntity(int oldX, int oldY, int newX, int newY)
         {
-            entityMatrix[newX, newY] = entityMatrix[oldX, oldY];
-            entityMatrix[oldX, oldY] = new emptyEntity();
+            EntityMatrix[newX, newY] = EntityMatrix[oldX, oldY];
+            EntityMatrix[oldX, oldY] = new emptyEntity();
         }
-        public virtual void ClearCell(int x, int y)
+        public virtual void ClearEntity(int x, int y)
         {
-            entityMatrix[x, y] = new emptyEntity();
+            EntityMatrix[x, y] = new emptyEntity();
         }
         public virtual void AddEntity(entity newEntity)
         {
-            entityMatrix[newEntity.X, newEntity.Y] = newEntity;
+            EntityMatrix[newEntity.X, newEntity.Y] = newEntity;
         }
 
     }
