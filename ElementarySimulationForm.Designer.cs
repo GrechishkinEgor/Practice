@@ -28,13 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.SettingsPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
+            // 
+            // SettingsPanel
+            // 
+            this.SettingsPanel.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.SettingsPanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.SettingsPanel.Location = new System.Drawing.Point(0, 0);
+            this.SettingsPanel.Name = "SettingsPanel";
+            this.SettingsPanel.Size = new System.Drawing.Size(200, 362);
+            this.SettingsPanel.TabIndex = 0;
             // 
             // ElementarySimulationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(598, 362);
+            this.Controls.Add(this.SettingsPanel);
             this.Name = "ElementarySimulationForm";
             this.Text = "БИО Симулякрум. Элементарная симуляция";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ElementarySimulationForm_FormClosed);
@@ -43,5 +54,7 @@
         }
 
         #endregion
+
+        private Panel SettingsPanel;
     }
 }
