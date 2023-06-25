@@ -129,8 +129,6 @@ namespace Practice
                         return;
                     }
             }
-            
-
         }
 
         public elementaryEntity()

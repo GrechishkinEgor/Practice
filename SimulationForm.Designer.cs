@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.managmentPanel = new System.Windows.Forms.Panel();
-            this.fieldDataGrid = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.fieldDataGrid)).BeginInit();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // managmentPanel
@@ -42,37 +42,36 @@
             this.managmentPanel.Size = new System.Drawing.Size(237, 450);
             this.managmentPanel.TabIndex = 0;
             // 
-            // fieldDataGrid
+            // pictureBox1
             // 
-            this.fieldDataGrid.AllowUserToAddRows = false;
-            this.fieldDataGrid.AllowUserToDeleteRows = false;
-            this.fieldDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.fieldDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fieldDataGrid.Location = new System.Drawing.Point(0, 0);
-            this.fieldDataGrid.Name = "fieldDataGrid";
-            this.fieldDataGrid.ReadOnly = true;
-            this.fieldDataGrid.RowTemplate.Height = 25;
-            this.fieldDataGrid.Size = new System.Drawing.Size(563, 450);
-            this.fieldDataGrid.TabIndex = 1;
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.pictureBox1.Image = global::Practice.Properties.Resources.ElementaryEntity;
+            this.pictureBox1.Location = new System.Drawing.Point(86, 111);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // simulationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.fieldDataGrid);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.managmentPanel);
             this.Name = "simulationForm";
             this.Text = "Симуляция";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            ((System.ComponentModel.ISupportInitialize)(this.fieldDataGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private Panel managmentPanel;
-        private DataGridView fieldDataGrid;
+        private PictureBox pictureBox1;
     }
 }

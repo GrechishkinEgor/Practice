@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Practice
 {
-    internal class fieldDataGrid : field
+    internal class fieldElementarySimulation : field
     {
-        public fieldDataGrid(int width, int height) : base(width, height)
+        public fieldElementarySimulation(int width, int height) : base(width, height)
         {
 
         }
