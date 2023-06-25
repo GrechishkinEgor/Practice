@@ -11,9 +11,10 @@ namespace Practice
         //Матрица изображений сущностей
         public PictureBox[,] PictureMatrix { get; }
         //Определяет, работает ли отрисовка сущностей на экране
+        private bool enabledDrawing = true;
         public bool EnabledDrawing 
         {
-            get => EnabledDrawing;
+            get => enabledDrawing;
             set
             {
                 if (value == false)
@@ -30,6 +31,7 @@ namespace Practice
                             PictureMatrix[i, j].Enabled = true;
                             PictureMatrix[i, j].Visible = true;
                         }
+                enabledDrawing = value;
             }
         }
 
@@ -42,7 +44,7 @@ namespace Practice
                     PictureMatrix[x, y].Image = global::Practice.Properties.Resources.ElementaryEntity;
                     break;
                 case "food":
-                    PictureMatrix[x, y].Image = global::Practice.Properties.Resources.EmptyEntity;
+                    PictureMatrix[x, y].Image = global::Practice.Properties.Resources.Food;
                     break;
                 case "emptyEntity":
                 default:

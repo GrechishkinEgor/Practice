@@ -29,5 +29,13 @@ namespace Practice
         {
             Program.CloseApplication();
         }
+
+        private void SomeActionButton_Click(object sender, EventArgs e)
+        {
+            simField.EnabledDrawing = false;
+            simField.AddEntity(new elementaryEntity());
+            simField.EnabledDrawing = true;
+            
+        }
     }
 }
