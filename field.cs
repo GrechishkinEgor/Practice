@@ -9,6 +9,8 @@ namespace Practice
     internal abstract class field
     {
         public entity[,] EntityMatrix { get; } = { };
+        public int Width { get; } = 0;
+        public int Height { get; } = 0;
 
         public field(int width, int height)
         {
@@ -16,6 +18,8 @@ namespace Practice
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
                     EntityMatrix[i, j] = new emptyEntity();
+            this.Width = width;
+            this.Height = height;
         }
 
         public virtual void DoBeat()
