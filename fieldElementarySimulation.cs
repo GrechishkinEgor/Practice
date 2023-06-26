@@ -14,6 +14,24 @@ namespace Practice
         private bool enabledDrawing = true;
         //Очередь на обработку тактового действия
         protected Queue<elementaryEntity> beatQueue = new Queue<elementaryEntity>();
+        //Количество элементарных сущностей на поле
+        public int ElemEntCount { get => beatQueue.Count; }
+        //Количество еды на поле, которое генерируется каждый такт
+        protected int foodCount = 1;
+        //Энергетическая ценность еды
+        protected int foodEnergy = 20;
+
+        public int FoodCount
+        {
+            get => foodCount;
+            set { if (value >= 0) foodCount = value; }
+        }
+        public int FoodEnergy
+        {
+            get => foodEnergy;
+            set { if (value >= 0) foodEnergy = value; }
+        }
+        //Работает или нет отрисовка сущностей
         public bool EnabledDrawing 
         {
             get => enabledDrawing;
@@ -37,6 +55,26 @@ namespace Practice
 
         public override void DoBeat()
         {
+            //Генерация еды
+            Random randomizer = new Random();
+            int x, y;
+            for (int i = 0; i < foodCount; i++)
+            {
+                //Попытка сгенерировать очередную еду
+                for (int j = 0; j < 16; j++)
+                {
+                    x = randomizer.Next(Width);
+                    y = randomizer.Next(Height);
+                    if (EntityMatrix[x,y].Type == "emptyEntity")
+                    {
+                        food newFood = new food();
+                        newFood.Energy = this.foodEnergy;
+                        this.AddEntity(newFood, x, y);
+                        break;
+                    }
+                }
+            }
+            
             int queueLength = beatQueue.Count;
             for (int i = 0; i < queueLength; i++)
             {
