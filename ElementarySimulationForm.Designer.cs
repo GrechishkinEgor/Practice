@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.SettingsPanel = new System.Windows.Forms.Panel();
             this.SomeActionButton = new System.Windows.Forms.Button();
+            this.Beat = new System.Windows.Forms.Timer(this.components);
             this.SettingsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,6 +56,11 @@
             this.SomeActionButton.UseVisualStyleBackColor = true;
             this.SomeActionButton.Click += new System.EventHandler(this.SomeActionButton_Click);
             // 
+            // Beat
+            // 
+            this.Beat.Interval = 500;
+            this.Beat.Tick += new System.EventHandler(this.Beat_Tick);
+            // 
             // ElementarySimulationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -72,5 +79,6 @@
 
         private Panel SettingsPanel;
         private Button SomeActionButton;
+        private System.Windows.Forms.Timer Beat;
     }
 }

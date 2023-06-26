@@ -56,6 +56,11 @@ namespace Practice
             get => energyForMove;
             set { if (value >= 0) energyForMove = value; }
         }
+        public virtual int EnergyForChild
+        {
+            get => energyForChild;
+            set { if (value >= 0) energyForChild = value; }
+        }
 
         //Переопредленное поведение существа
         public override void  BeatAction()
@@ -90,8 +95,8 @@ namespace Practice
                 //Попытки разместить дочернюю сущность на симуляционном поле
                 for (int i = 0; i < 16; i++)
                 {
-                    vectorX = randomizer.Next(-1, 1);
-                    vectorY = randomizer.Next(-1, 1);
+                    vectorX = randomizer.Next(-1, 2);
+                    vectorY = randomizer.Next(-1, 2);
                     try
                     {
                         if (vectorX != 0 && vectorY != 0 &&
@@ -111,8 +116,8 @@ namespace Practice
             //Попытки употребления еды
             for (int i = 0; i < 16; i++)
             {
-                vectorX = randomizer.Next(-1, 1);
-                vectorY = randomizer.Next(-1, 1);
+                vectorX = randomizer.Next(-1, 2);
+                vectorY = randomizer.Next(-1, 2);
                 try
                 {
                     if (entityBase.EntityMatrix[this.x + vectorX, this.y + vectorY].Type == "food")
@@ -130,8 +135,8 @@ namespace Practice
             //Попытки найти подходящую для перемещения клетку
             for (int i = 0; i < 16; i++)
             {
-                vectorX = randomizer.Next(-1, 1);
-                vectorY = randomizer.Next(-1, 1);
+                vectorX = randomizer.Next(-1, 2);
+                vectorY = randomizer.Next(-1, 2);
                 int someint = entityBase.Height;
                 try
                 {

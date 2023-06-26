@@ -23,7 +23,13 @@ namespace Practice
             simField = new fieldElementarySimulation(sizeWin.WidthField, sizeWin.HeightField);
             foreach (PictureBox pictureBox in simField.PictureMatrix)
                 this.Controls.Add(pictureBox);
-            simField.AddEntity(new elementaryEntity(), 4, 4);
+
+            elementaryEntity ent = new elementaryEntity();
+            ent.ReproductionChance = 1000;
+            ent.Energy = 20000;
+            ent.EnergyForChild = 100;
+            ent.MaxLifeTime = 30;
+            simField.AddEntity(ent, 4, 4);
         }
 
         private void ElementarySimulationForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -34,8 +40,13 @@ namespace Practice
         private void SomeActionButton_Click(object sender, EventArgs e)
         {
             //simField.EnabledDrawing = false;
-            simField.DoBeat();
+            Beat.Enabled = Beat.Enabled == true ? false : true;
             //simField.DoBeat();
+        }
+
+        private void Beat_Tick(object sender, EventArgs e)
+        {
+            simField.DoBeat();
         }
     }
 }
