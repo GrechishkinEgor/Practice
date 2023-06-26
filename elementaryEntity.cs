@@ -12,12 +12,13 @@ namespace Practice
         //Характеристики сущности
         protected int energy = 100;
         protected int lifeTime = 0;
-        protected int maxLifeTime = 0;
+        protected int maxLifeTime = 10;
         protected int energyForChild = 0;
         protected int reproductionChance = 0;
         protected int visionDistance = 0;
         protected int energyForLife = 0;
         protected int energyForMove = 0;
+        public bool IsAlive { get; protected set; } = true;
 
         //Свойства класса. Наследники могут задавать свои set'ы
         public virtual int Energy
@@ -59,11 +60,17 @@ namespace Practice
         //Переопредленное поведение существа
         public override void  BeatAction()
         {
+            lifeTime++;
             energy = energy - energyForLife;
             if (energy <= 0)
             {
                 energy = 0;
-                entityBase.ClearEntity(x, y);
+                IsAlive = false;
+                return;
+            }
+            if (lifeTime > MaxLifeTime)
+            {
+                IsAlive = false;
                 return;
             }
 
@@ -128,13 +135,12 @@ namespace Practice
                 int someint = entityBase.Height;
                 try
                 {
-                    if (vectorX != 0 && vectorY != 0)
-                        if (entityBase.EntityMatrix[x + vectorX, y + vectorY].Type == "emptyEntity")
-                        {
-                            //Успешное перемещение и завершение тактового действия
-                            entityBase.MoveEntity(x, y, x + vectorX, y + vectorY);
-                            return;
-                        }
+                    if (entityBase.EntityMatrix[x + vectorX, y + vectorY].Type == "emptyEntity")
+                    {
+                        //Успешное перемещение и завершение тактового действия
+                        entityBase.MoveEntity(x, y, x + vectorX, y + vectorY);
+                        return;
+                    }
                 }
                 catch (Exception) { }
             }

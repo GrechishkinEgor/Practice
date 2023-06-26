@@ -13,7 +13,7 @@ namespace Practice
         //Определяет, работает ли отрисовка сущностей на экране
         private bool enabledDrawing = true;
         //Очередь на обработку тактового действия
-        protected Queue<entity> beatQueue = new Queue<entity>();
+        protected Queue<elementaryEntity> beatQueue = new Queue<elementaryEntity>();
         public bool EnabledDrawing 
         {
             get => enabledDrawing;
@@ -32,6 +32,20 @@ namespace Practice
                         image.Visible = true;
                     }
                 enabledDrawing = value;
+            }
+        }
+
+        public override void DoBeat()
+        {
+            int queueLength = beatQueue.Count;
+            for (int i = 0; i < queueLength; i++)
+            {
+                elementaryEntity someEntity = beatQueue.Dequeue();
+                someEntity.BeatAction();
+                if (someEntity.IsAlive)
+                    beatQueue.Enqueue(someEntity);
+                else
+                    this.ClearEntity(someEntity.X, someEntity.Y);
             }
         }
 
@@ -78,7 +92,9 @@ namespace Practice
         public override void AddEntity(entity newEntity, int x, int y)
         {
             base.AddEntity(newEntity, x, y);
-            HarmonizeEntityAndPicture(x, y); 
+            HarmonizeEntityAndPicture(x, y);
+            if (newEntity.Type == "elementaryEntity")
+                beatQueue.Enqueue((elementaryEntity)newEntity);
         }
         public override void ClearEntity(int x, int y)
         {
