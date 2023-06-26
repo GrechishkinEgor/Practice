@@ -26,15 +26,7 @@ namespace Practice
 
         //Симуляционное поле, которому принадлежит сущность
         protected field entityBase;
-        public field EntityBase
-        {
-            get => entityBase;
-            set 
-            { 
-                entityBase = value;
-                value.AddEntity(this);
-            }
-        }
+        public virtual field EntityBase { get => entityBase; set { entityBase = value; } }
 
         //Тип сущности. При наследовании необходимо изменить значение
         public string Type { get; protected set; } = "entity";

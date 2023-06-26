@@ -46,5 +46,10 @@ namespace Practice
             this.Controls.AddRange(new Control[] { buttonOK, buttonCancel });
             this.ResumeLayout();
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

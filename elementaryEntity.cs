@@ -67,67 +67,76 @@ namespace Practice
                 return;
             }
 
-            //Переменные для обзора поля вокруг сущности
-            int leftAngleX = (x - 1 >= 0) ? (x - 1) : x;
-            int leftAngleY = (y - 1 >= 0) ? (y - 1) : y;
-            int rightAngleX = (x + 1 < entityBase.Width) ? (x + 1) : x;
-            int rightAngleY = (y + 1 < entityBase.Height) ? (y + 1) : y;
-            //Рандомайзер
-            Random chance = new Random();
+            int vectorX, vectorY;               //Координаты вектора
+            Random randomizer = new Random();
 
             //Попытка размножения
             int energyForReproduction = 3 * (energyForLife + energyForMove) + energyForChild;
-            if (energyForReproduction > energy)
+            if (energy > energyForReproduction &&
+                randomizer.Next(1000) + 1 <= reproductionChance)
             {
-                
-                if (chance.Next(1000) + 1 <= reproductionChance)
-                {
-                    //Создание дочерней сущности
-                    elementaryEntity child = new elementaryEntity(this);
-                    child.lifeTime = 0;
-                    child.energy = this.energyForChild;
-                    this.energy -= this.energyForChild;
+                //Создание дочерней сущности
+                elementaryEntity child = new elementaryEntity(this);
+                child.lifeTime = 0;
+                child.energy = this.energyForChild;
 
-                    //Попытка разместить дочернюю сущность на поле
-                    for (int i = leftAngleX; i <= rightAngleX; i++)
-                        for (int j = leftAngleY; j <= rightAngleY; j++)
-                            if (entityBase.EntityMatrix[i,j].Type == "emptyEntity")
-                            {
-                                //Если успешно, то тактовое действие заканчивается
-                                entityBase.AddEntity(child);
-                                return;
-                            }
+                //Попытки разместить дочернюю сущность на симуляционном поле
+                for (int i = 0; i < 16; i++)
+                {
+                    vectorX = randomizer.Next(-1, 1);
+                    vectorY = randomizer.Next(-1, 1);
+                    try
+                    {
+                        if (vectorX != 0 && vectorY != 0 &&
+                            entityBase.EntityMatrix[this.x + vectorX, this.y + vectorY].Type == "emptyEntity")
+                        {
+                            //Успешная попытка. Завершить тактовое действие
+                            entityBase.AddEntity(child, this.x + vectorX, this.y + vectorY);
+                            this.energy -= this.energyForChild;
+                            return;
+                        }
+                    }
+                    catch (Exception) { }
                 }
+
             }
 
-            //Употребление еды
-            for (int i = leftAngleX; i <= rightAngleX; i++)
-                for (int j = leftAngleY; j <= rightAngleY; j++)
-                    if (entityBase.EntityMatrix[i, j].Type == "food")
-                    {
-                        //Если успешно, то тактовое действие заканчивается
-                        food dish = (food)entityBase.EntityMatrix[i, j];
-                        this.energy += dish.Energy;
-                        entityBase.ClearEntity(i, j);
-                        return;
-                    }
-
-            //Поиск еды и движение
-            int vectorX, vectorY;   //Координаты вектора перемещения
-            //Делается 10 попыток найти подходящую для перемещения клетку
-            for (int i = 0; i < 10; i++)
+            //Попытки употребления еды
+            for (int i = 0; i < 16; i++)
             {
-                vectorX = chance.Next(-1, 1);
-                vectorY = chance.Next(-1, 1);
-                if (vectorX != 0 && vectorY != 0)
-                    if (entityBase.EntityMatrix[x + vectorX, y + vectorY].Type == "emptyEntity")
+                vectorX = randomizer.Next(-1, 1);
+                vectorY = randomizer.Next(-1, 1);
+                try
+                {
+                    if (entityBase.EntityMatrix[this.x + vectorX, this.y + vectorY].Type == "food")
                     {
-                        //Успешное перемещение и завершение тактового действия
-                        entityBase.MoveEntity(x, y, x + vectorX, y + vectorY);
-                        x += vectorX;
-                        y += vectorY;
+                        //Успешная попытка. Завершить тактовое действие
+                        food someFood = (food)entityBase.EntityMatrix[this.x + vectorX, this.y + vectorY];
+                        this.energy += someFood.Energy;
+                        entityBase.ClearEntity(this.x + vectorX, this.y + vectorY);
                         return;
                     }
+                }
+                catch (Exception) { }
+            }
+            
+            //Попытки найти подходящую для перемещения клетку
+            for (int i = 0; i < 16; i++)
+            {
+                vectorX = randomizer.Next(-1, 1);
+                vectorY = randomizer.Next(-1, 1);
+                int someint = entityBase.Height;
+                try
+                {
+                    if (vectorX != 0 && vectorY != 0)
+                        if (entityBase.EntityMatrix[x + vectorX, y + vectorY].Type == "emptyEntity")
+                        {
+                            //Успешное перемещение и завершение тактового действия
+                            entityBase.MoveEntity(x, y, x + vectorX, y + vectorY);
+                            return;
+                        }
+                }
+                catch (Exception) { }
             }
         }
 

@@ -23,6 +23,7 @@ namespace Practice
             simField = new fieldElementarySimulation(sizeWin.WidthField, sizeWin.HeightField);
             foreach (PictureBox pictureBox in simField.PictureMatrix)
                 this.Controls.Add(pictureBox);
+            simField.AddEntity(new elementaryEntity(), 4, 4);
         }
 
         private void ElementarySimulationForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -32,10 +33,9 @@ namespace Practice
 
         private void SomeActionButton_Click(object sender, EventArgs e)
         {
-            simField.EnabledDrawing = false;
-            simField.AddEntity(new elementaryEntity());
-            simField.EnabledDrawing = true;
-            
+            //simField.EnabledDrawing = false;
+            simField.DoBeat();
+            //simField.DoBeat();
         }
     }
 }

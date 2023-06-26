@@ -12,6 +12,8 @@ namespace Practice
         public PictureBox[,] PictureMatrix { get; }
         //Определяет, работает ли отрисовка сущностей на экране
         private bool enabledDrawing = true;
+        //Очередь на обработку тактового действия
+        protected Queue<entity> beatQueue = new Queue<entity>();
         public bool EnabledDrawing 
         {
             get => enabledDrawing;
@@ -24,13 +26,11 @@ namespace Practice
                         image.Visible = false;
                     }
                 else
-                    for (int i = 0; i < Width; i++)
-                        for (int j = 0; j < Height; j++)
-                        {
-                            HarmonizeEntityAndPicture(i, j);
-                            PictureMatrix[i, j].Enabled = true;
-                            PictureMatrix[i, j].Visible = true;
-                        }
+                    foreach (PictureBox image in PictureMatrix)
+                    {
+                        image.Enabled = true;
+                        image.Visible = true;
+                    }
                 enabledDrawing = value;
             }
         }
@@ -41,14 +41,14 @@ namespace Practice
             switch(EntityMatrix[x,y].Type)
             {
                 case "elementaryEntity":
-                    PictureMatrix[x, y].Image = global::Practice.Properties.Resources.ElementaryEntity;
+                    PictureMatrix[x, y].BackColor = Color.Green;
                     break;
                 case "food":
-                    PictureMatrix[x, y].Image = global::Practice.Properties.Resources.Food;
+                    PictureMatrix[x, y].BackColor = Color.Orange;
                     break;
                 case "emptyEntity":
                 default:
-                    PictureMatrix[x, y].Image = global::Practice.Properties.Resources.EmptyEntity;
+                    PictureMatrix[x, y].BackColor = Color.White;
                     break;
             }
         }
@@ -63,10 +63,10 @@ namespace Practice
                     PictureBox somePicture = new PictureBox();
                     somePicture.BackColor = System.Drawing.SystemColors.Control;
                     somePicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-                    somePicture.Image = global::Practice.Properties.Resources.EmptyEntity;
-                    somePicture.Location = new System.Drawing.Point(200 + i * 35, j * 35);
+                    somePicture.Location = new System.Drawing.Point(200 + i * 10, j * 10);
+                    somePicture.BackColor = Color.White;
                     somePicture.Name = "PictureBox[" + Convert.ToString(i) + "][" + Convert.ToString(j) + "]";
-                    somePicture.Size = new System.Drawing.Size(34, 34);
+                    somePicture.Size = new System.Drawing.Size(10, 10);
                     somePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
                     somePicture.TabIndex = 0;
                     somePicture.TabStop = false;
@@ -75,27 +75,21 @@ namespace Practice
                 }
         }
 
-        public override void AddEntity(entity newEntity)
+        public override void AddEntity(entity newEntity, int x, int y)
         {
-            base.AddEntity(newEntity);
-            if (EnabledDrawing)
-                HarmonizeEntityAndPicture(newEntity.X, newEntity.Y);
+            base.AddEntity(newEntity, x, y);
+            HarmonizeEntityAndPicture(x, y); 
         }
         public override void ClearEntity(int x, int y)
         {
             base.ClearEntity(x, y);
-            if (EnabledDrawing)
-                HarmonizeEntityAndPicture(x, y);
+            HarmonizeEntityAndPicture(x, y);
         }
         public override void MoveEntity(int oldX, int oldY, int newX, int newY)
         {
             base.MoveEntity(oldX, oldY, newX, newY);
-            if (EnabledDrawing)
-            {
-                HarmonizeEntityAndPicture(oldX, oldY);
-                HarmonizeEntityAndPicture(newX, newY);
-            }
-                
+            HarmonizeEntityAndPicture(oldX, oldY);
+            HarmonizeEntityAndPicture(newX, newY);
         }
     }
 }
