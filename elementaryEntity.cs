@@ -15,7 +15,7 @@ namespace Practice
         protected int maxLifeTime = 10;
         protected int energyForChild = 0;
         protected int reproductionChance = 0;
-        protected int visionDistance = 0;
+        //protected int visionDistance = 0;
         protected int energyForLife = 0;
         protected int energyForMove = 0;
         public bool IsAlive { get; protected set; } = true;
@@ -41,11 +41,11 @@ namespace Practice
             get => reproductionChance;
             set { if (value >= 0 && value <= 1000) reproductionChance = value; }
         }
-        public virtual int VisionDistance
+        /*public virtual int VisionDistance
         {
             get => visionDistance;
             set { if (value >= 0) visionDistance = value; }
-        }
+        }*/
         public virtual int EnergyForLife
         {
             get => energyForLife;
@@ -169,7 +169,7 @@ namespace Practice
             this.energyForChild = obj.energyForChild;
             this.energyForMove = obj.energyForMove;
             this.energyForLife = obj.energyForLife;
-            this.visionDistance = obj.visionDistance;
+            //this.visionDistance = obj.visionDistance;
             this.ReproductionChance = obj.ReproductionChance;
         }
     }

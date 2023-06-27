@@ -14,6 +14,7 @@ namespace Practice
     public partial class ElementarySimulationForm : Form
     {
         private fieldElementarySimulation simField;
+        private SettingsElementarySimulation settingsWin = new SettingsElementarySimulation();
         public ElementarySimulationForm()
         {
             InitializeComponent();
@@ -152,6 +153,11 @@ namespace Practice
                 DrawingButton.Text = "Выключить отрисовку";
                 simField.EnabledDrawing = true;
             }
+        }
+
+        private void EntitySettingsButton_Click(object sender, EventArgs e)
+        {
+            settingsWin.ShowDialog();
         }
     }
 }

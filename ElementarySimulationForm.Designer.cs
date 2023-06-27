@@ -106,6 +106,7 @@
             this.EntitySettingsButton.TabIndex = 2;
             this.EntitySettingsButton.Text = "Параметры сущностей";
             this.EntitySettingsButton.UseVisualStyleBackColor = true;
+            this.EntitySettingsButton.Click += new System.EventHandler(this.EntitySettingsButton_Click);
             // 
             // SimRunButton
             // 
