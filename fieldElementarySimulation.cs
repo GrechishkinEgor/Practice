@@ -54,13 +54,13 @@ namespace Practice
                 if (value == false)
                     foreach(PictureBox image in PictureMatrix)
                     {
-                        image.Enabled = false;
+                        //image.Enabled = false;
                         image.Visible = false;
                     }
                 else
                     foreach (PictureBox image in PictureMatrix)
                     {
-                        image.Enabled = true;
+                        //image.Enabled = true;
                         image.Visible = true;
                     }
                 enabledDrawing = value;

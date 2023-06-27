@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.SettingsPanel = new System.Windows.Forms.Panel();
+            this.DrawingButton = new System.Windows.Forms.Button();
+            this.DeleteEntityButton = new System.Windows.Forms.Button();
             this.AddEntityButton = new System.Windows.Forms.Button();
             this.ElemEntCountLabel = new System.Windows.Forms.Label();
             this.EntitySettingsButton = new System.Windows.Forms.Button();
@@ -37,13 +39,13 @@
             this.SomeActionButton = new System.Windows.Forms.Button();
             this.Beat = new System.Windows.Forms.Timer(this.components);
             this.FieldPanel = new System.Windows.Forms.Panel();
-            this.DeleteEntityButton = new System.Windows.Forms.Button();
             this.SettingsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // SettingsPanel
             // 
             this.SettingsPanel.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.SettingsPanel.Controls.Add(this.DrawingButton);
             this.SettingsPanel.Controls.Add(this.DeleteEntityButton);
             this.SettingsPanel.Controls.Add(this.AddEntityButton);
             this.SettingsPanel.Controls.Add(this.ElemEntCountLabel);
@@ -55,6 +57,26 @@
             this.SettingsPanel.Name = "SettingsPanel";
             this.SettingsPanel.Size = new System.Drawing.Size(200, 362);
             this.SettingsPanel.TabIndex = 0;
+            // 
+            // DrawingButton
+            // 
+            this.DrawingButton.Location = new System.Drawing.Point(12, 128);
+            this.DrawingButton.Name = "DrawingButton";
+            this.DrawingButton.Size = new System.Drawing.Size(173, 23);
+            this.DrawingButton.TabIndex = 6;
+            this.DrawingButton.Text = "Выключить отрисовку";
+            this.DrawingButton.UseVisualStyleBackColor = true;
+            this.DrawingButton.Click += new System.EventHandler(this.DrawingButton_Click);
+            // 
+            // DeleteEntityButton
+            // 
+            this.DeleteEntityButton.Location = new System.Drawing.Point(12, 99);
+            this.DeleteEntityButton.Name = "DeleteEntityButton";
+            this.DeleteEntityButton.Size = new System.Drawing.Size(173, 23);
+            this.DeleteEntityButton.TabIndex = 5;
+            this.DeleteEntityButton.Text = "Удалить сущность";
+            this.DeleteEntityButton.UseVisualStyleBackColor = true;
+            this.DeleteEntityButton.Click += new System.EventHandler(this.DeleteEntityButton_Click);
             // 
             // AddEntityButton
             // 
@@ -69,11 +91,12 @@
             // ElemEntCountLabel
             // 
             this.ElemEntCountLabel.AutoSize = true;
-            this.ElemEntCountLabel.Location = new System.Drawing.Point(12, 127);
+            this.ElemEntCountLabel.Location = new System.Drawing.Point(12, 159);
             this.ElemEntCountLabel.Name = "ElemEntCountLabel";
             this.ElemEntCountLabel.Size = new System.Drawing.Size(73, 15);
             this.ElemEntCountLabel.TabIndex = 3;
             this.ElemEntCountLabel.Text = "Сущностей:";
+            this.ElemEntCountLabel.Click += new System.EventHandler(this.ElemEntCountLabel_Click);
             // 
             // EntitySettingsButton
             // 
@@ -112,6 +135,7 @@
             // 
             // FieldPanel
             // 
+            this.FieldPanel.AutoScroll = true;
             this.FieldPanel.BackColor = System.Drawing.SystemColors.Info;
             this.FieldPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FieldPanel.Location = new System.Drawing.Point(200, 0);
@@ -122,16 +146,6 @@
             this.FieldPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.FieldPanel_Paint);
             this.FieldPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FieldPanel_MouseClick);
             // 
-            // DeleteEntityButton
-            // 
-            this.DeleteEntityButton.Location = new System.Drawing.Point(12, 99);
-            this.DeleteEntityButton.Name = "DeleteEntityButton";
-            this.DeleteEntityButton.Size = new System.Drawing.Size(173, 23);
-            this.DeleteEntityButton.TabIndex = 5;
-            this.DeleteEntityButton.Text = "Удалить сущность";
-            this.DeleteEntityButton.UseVisualStyleBackColor = true;
-            this.DeleteEntityButton.Click += new System.EventHandler(this.DeleteEntityButton_Click);
-            // 
             // ElementarySimulationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -141,6 +155,7 @@
             this.Controls.Add(this.SettingsPanel);
             this.Name = "ElementarySimulationForm";
             this.Text = "БИО Симулякрум. Элементарная симуляция";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ElementarySimulationForm_FormClosed);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ElementarySimulationForm_MouseClick);
             this.SettingsPanel.ResumeLayout(false);
@@ -160,5 +175,6 @@
         private Button AddEntityButton;
         private Panel FieldPanel;
         private Button DeleteEntityButton;
+        private Button DrawingButton;
     }
 }

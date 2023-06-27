@@ -10,15 +10,19 @@ namespace Practice
             helloForm.Close();
         }
 
+        public static void OpenHelloForm()
+        {
+            helloForm.Show();
+        }
+
         public static void OpenSimulation()
         {
-            switch(ChosenSimulation)
+            switch (ChosenSimulation)
             {
                 case "Ёлементарна€ симул€ци€":
                     ElementarySimulationForm simForm = new ElementarySimulationForm();
-                    simForm.Show();
                     break;
-                
+
                 case "":
                 case null:
                 default:

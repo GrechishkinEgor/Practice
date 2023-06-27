@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -18,12 +19,21 @@ namespace Practice
             InitializeComponent();
 
             WidthAndHeightForm sizeWin = new WidthAndHeightForm();
-            sizeWin.ShowDialog();
+            if (sizeWin.ShowDialog() == DialogResult.OK)
+            {
+                WaitForm waitWin = new WaitForm();
+                waitWin.Show();
 
-            simField = new fieldElementarySimulation(sizeWin.WidthField, sizeWin.HeightField);
-            foreach (PictureBox pictureBox in simField.PictureMatrix)
-                this.Controls.Add(pictureBox);
-            FieldPanel.SendToBack();
+                simField = new fieldElementarySimulation(sizeWin.WidthField, sizeWin.HeightField);
+                foreach (PictureBox pictureBox in simField.PictureMatrix)
+                    this.Controls.Add(pictureBox);
+                FieldPanel.SendToBack();
+
+                waitWin.Close();
+                this.Show();
+            }
+            else
+                this.Close();
         }
 
         private void ElementarySimulationForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -53,6 +63,7 @@ namespace Practice
                 EntitySettingsButton.Enabled = false;
                 AddEntityButton.Enabled = false;
                 DeleteEntityButton.Enabled = false;
+                DrawingButton.Enabled = false;
             }
             else
             {
@@ -61,6 +72,7 @@ namespace Practice
                 EntitySettingsButton.Enabled = true;
                 AddEntityButton.Enabled = true;
                 DeleteEntityButton.Enabled = true;
+                DrawingButton.Enabled = true;
             }
         }
 
@@ -120,6 +132,25 @@ namespace Practice
                 EntitySettingsButton.Enabled = true;
                 AddEntityButton.Enabled = true;
                 simField.IsDeletingMood = false;
+            }
+        }
+
+        private void ElemEntCountLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DrawingButton_Click(object sender, EventArgs e)
+        {
+            if (DrawingButton.Text == "Выключить отрисовку")
+            {
+                DrawingButton.Text = "Включить отрисовку";
+                simField.EnabledDrawing = false;
+            }
+            else
+            {
+                DrawingButton.Text = "Выключить отрисовку";
+                simField.EnabledDrawing = true;
             }
         }
     }
