@@ -11,7 +11,7 @@ namespace Practice
         //Матрица изображений сущностей
         public PictureBox[,] PictureMatrix { get; }
         //Определяет, работает ли отрисовка сущностей на экране
-        private bool enabledDrawing = true;
+        protected bool enabledDrawing = true;
         //Очередь на обработку тактового действия
         protected Queue<elementaryEntity> beatQueue = new Queue<elementaryEntity>();
         //Количество элементарных сущностей на поле
@@ -20,7 +20,21 @@ namespace Practice
         protected int foodCount = 1;
         //Энергетическая ценность еды
         protected int foodEnergy = 20;
+        //Включен ли режим добавления новых сущностей
+        protected bool isAdditionalMood = false;
+        //Включен ли режим удаления сущностей
+        protected bool isDeletingMood = false;
 
+        public bool IsDeletingMood
+        {
+            get => isDeletingMood;
+            set => isDeletingMood = value;
+        }
+        public bool IsAdditionalMood
+        {
+            get => isAdditionalMood;
+            set => isAdditionalMood = value;
+        }
         public int FoodCount
         {
             get => foodCount;
@@ -122,9 +136,31 @@ namespace Practice
                     somePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
                     somePicture.TabIndex = 0;
                     somePicture.TabStop = false;
+                    somePicture.MouseClick += this.EntityClick;
 
                     PictureMatrix[i, j] = somePicture;
                 }
+        }
+
+        //Обработчик события нажатия на сущность
+        protected void EntityClick(object sender, MouseEventArgs e)
+        {
+            PictureBox currentBox = (PictureBox)sender;
+            entity currentEntity = EntityMatrix[(currentBox.Location.X - 200) / 10, currentBox.Location.Y / 10];
+            if (isAdditionalMood && currentEntity.Type == "emptyEntity")
+            {
+                elementaryEntity ent = new elementaryEntity();
+                ent.ReproductionChance = 500;
+                ent.Energy = 5000;
+                ent.EnergyForChild = 100;
+                ent.MaxLifeTime = 30;
+                this.AddEntity(ent, (currentBox.Location.X - 200) / 10, currentBox.Location.Y / 10);
+            }
+            if (isDeletingMood)
+            {
+                emptyEntity ent = new emptyEntity();
+                this.AddEntity(ent, (currentBox.Location.X - 200) / 10, currentBox.Location.Y / 10);
+            }
         }
 
         public override void AddEntity(entity newEntity, int x, int y)

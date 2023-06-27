@@ -23,14 +23,7 @@ namespace Practice
             simField = new fieldElementarySimulation(sizeWin.WidthField, sizeWin.HeightField);
             foreach (PictureBox pictureBox in simField.PictureMatrix)
                 this.Controls.Add(pictureBox);
-
-            elementaryEntity ent = new elementaryEntity();
-            ent.ReproductionChance = 500;
-            ent.Energy = 5000;
-            ent.EnergyForChild = 100;
-            ent.MaxLifeTime = 30;
-            simField.AddEntity(ent, 4, 4);
-            simField.FoodCount = 5;
+            FieldPanel.SendToBack();
         }
 
         private void ElementarySimulationForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -57,11 +50,76 @@ namespace Practice
             {
                 SimRunButton.Text = "Остановить симуляцию";
                 Beat.Enabled = true;
+                EntitySettingsButton.Enabled = false;
+                AddEntityButton.Enabled = false;
+                DeleteEntityButton.Enabled = false;
             }
             else
             {
                 Beat.Enabled = false;
                 SimRunButton.Text = "Запустить симуляцию";
+                EntitySettingsButton.Enabled = true;
+                AddEntityButton.Enabled = true;
+                DeleteEntityButton.Enabled = true;
+            }
+        }
+
+        private void AddEntityButton_Click(object sender, EventArgs e)
+        {
+            if (AddEntityButton.Text == "Добавить сущность")
+            {
+                AddEntityButton.Text = "Завершить добавление";
+                SimRunButton.Enabled = false;
+                EntitySettingsButton.Enabled = false;
+                DeleteEntityButton.Enabled = false;
+                simField.IsAdditionalMood = true;
+            }
+            else
+            {
+                AddEntityButton.Text = "Добавить сущность";
+                SimRunButton.Enabled = true;
+                EntitySettingsButton.Enabled = true;
+                DeleteEntityButton.Enabled = true;
+                simField.IsAdditionalMood = false;
+            }
+        }
+
+        private void FieldPanel_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void FieldPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void FieldPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void ElementarySimulationForm_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void DeleteEntityButton_Click(object sender, EventArgs e)
+        {
+            if (DeleteEntityButton.Text == "Удалить сущность")
+            {
+                DeleteEntityButton.Text = "Завершить удаление";
+                SimRunButton.Enabled = false;
+                EntitySettingsButton.Enabled = false;
+                AddEntityButton.Enabled = false;
+                simField.IsDeletingMood = true;
+            }
+            else
+            {
+                DeleteEntityButton.Text = "Удалить сущность";
+                SimRunButton.Enabled = true;
+                EntitySettingsButton.Enabled = true;
+                AddEntityButton.Enabled = true;
+                simField.IsDeletingMood = false;
             }
         }
     }
