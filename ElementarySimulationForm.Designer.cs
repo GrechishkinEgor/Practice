@@ -127,6 +127,7 @@
             this.SomeActionButton.TabIndex = 0;
             this.SomeActionButton.Text = "Сделать что-нибудь";
             this.SomeActionButton.UseVisualStyleBackColor = true;
+            this.SomeActionButton.Visible = false;
             this.SomeActionButton.Click += new System.EventHandler(this.SomeActionButton_Click);
             // 
             // Beat

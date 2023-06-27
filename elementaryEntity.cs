@@ -73,7 +73,7 @@ namespace Practice
                 IsAlive = false;
                 return;
             }
-            if (lifeTime > MaxLifeTime)
+            if (lifeTime > maxLifeTime)
             {
                 IsAlive = false;
                 return;
@@ -88,8 +88,13 @@ namespace Practice
                 randomizer.Next(1000) + 1 <= reproductionChance)
             {
                 //Создание дочерней сущности
-                elementaryEntity child = new elementaryEntity(this);
-                child.lifeTime = 0;
+                elementaryEntity child = new elementaryEntity();
+                SettingsElementarySimulation settings = ((fieldElementarySimulation)entityBase).SettingsWin;
+                child.maxLifeTime = settings.MaxLifeTime;
+                child.energyForChild = settings.EnergyForChild;
+                child.reproductionChance = settings.ReproductionChance;
+                child.energyForLife = settings.EnergyForLife;
+                child.energyForMove = settings.EnergyForMove;
                 child.energy = this.energyForChild;
 
                 //Попытки разместить дочернюю сущность на симуляционном поле
@@ -133,17 +138,17 @@ namespace Practice
             }
             
             //Попытки найти подходящую для перемещения клетку
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < 16 && this.energy - this.energyForMove > 0; i++)
             {
                 vectorX = randomizer.Next(-1, 2);
                 vectorY = randomizer.Next(-1, 2);
-                int someint = entityBase.Height;
                 try
                 {
                     if (entityBase.EntityMatrix[x + vectorX, y + vectorY].Type == "emptyEntity")
                     {
                         //Успешное перемещение и завершение тактового действия
                         entityBase.MoveEntity(x, y, x + vectorX, y + vectorY);
+                        this.energy -= this.energyForMove;
                         return;
                     }
                 }

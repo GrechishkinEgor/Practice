@@ -14,7 +14,6 @@ namespace Practice
     public partial class ElementarySimulationForm : Form
     {
         private fieldElementarySimulation simField;
-        private SettingsElementarySimulation settingsWin = new SettingsElementarySimulation();
         public ElementarySimulationForm()
         {
             InitializeComponent();
@@ -85,6 +84,7 @@ namespace Practice
                 SimRunButton.Enabled = false;
                 EntitySettingsButton.Enabled = false;
                 DeleteEntityButton.Enabled = false;
+                DrawingButton.Enabled = false;
                 simField.IsAdditionalMood = true;
             }
             else
@@ -93,6 +93,7 @@ namespace Practice
                 SimRunButton.Enabled = true;
                 EntitySettingsButton.Enabled = true;
                 DeleteEntityButton.Enabled = true;
+                DrawingButton.Enabled = true;
                 simField.IsAdditionalMood = false;
             }
         }
@@ -124,6 +125,7 @@ namespace Practice
                 SimRunButton.Enabled = false;
                 EntitySettingsButton.Enabled = false;
                 AddEntityButton.Enabled = false;
+                DrawingButton.Enabled = false;
                 simField.IsDeletingMood = true;
             }
             else
@@ -132,6 +134,7 @@ namespace Practice
                 SimRunButton.Enabled = true;
                 EntitySettingsButton.Enabled = true;
                 AddEntityButton.Enabled = true;
+                DrawingButton.Enabled = true;
                 simField.IsDeletingMood = false;
             }
         }
@@ -157,7 +160,10 @@ namespace Practice
 
         private void EntitySettingsButton_Click(object sender, EventArgs e)
         {
-            settingsWin.ShowDialog();
+            if (simField.SettingsWin.ShowDialog() == DialogResult.OK)
+            {
+                simField.UpdateEntitySettings();
+            }
         }
     }
 }

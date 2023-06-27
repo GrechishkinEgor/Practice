@@ -24,6 +24,8 @@ namespace Practice
         protected bool isAdditionalMood = false;
         //Включен ли режим удаления сущностей
         protected bool isDeletingMood = false;
+        //Окно параметров сущностей
+        public SettingsElementarySimulation SettingsWin { get; } = new SettingsElementarySimulation();
 
         public bool IsDeletingMood
         {
@@ -72,7 +74,7 @@ namespace Practice
             //Генерация еды
             Random randomizer = new Random();
             int x, y;
-            for (int i = 0; i < foodCount; i++)
+            for (int i = 0; i < SettingsWin.FoodGenerationSpeed; i++)
             {
                 //Попытка сгенерировать очередную еду
                 for (int j = 0; j < 16; j++)
@@ -89,6 +91,7 @@ namespace Practice
                 }
             }
             
+            //Обработка тактовых действий сущностей
             int queueLength = beatQueue.Count;
             for (int i = 0; i < queueLength; i++)
             {
@@ -116,6 +119,29 @@ namespace Practice
                 default:
                     PictureMatrix[x, y].BackColor = Color.White;
                     break;
+            }
+        }
+
+        public void UpdateEntitySettings()
+        {
+            foreach(entity ent in EntityMatrix)
+            {
+                switch (ent.Type)
+                {
+                    case "elementaryEntity":
+                        ((elementaryEntity)ent).MaxLifeTime = SettingsWin.MaxLifeTime;
+                        ((elementaryEntity)ent).EnergyForChild = SettingsWin.EnergyForChild;
+                        ((elementaryEntity)ent).ReproductionChance = SettingsWin.ReproductionChance;
+                        ((elementaryEntity)ent).EnergyForLife = SettingsWin.EnergyForLife;
+                        ((elementaryEntity)ent).EnergyForMove = SettingsWin.EnergyForMove;
+                        break;
+                    case "food":
+                        ((food)ent).Energy = SettingsWin.FoodEnergy;
+                        break;
+                    case "emptyEntity":
+                    default:
+                        break;
+                }
             }
         }
         
@@ -150,10 +176,12 @@ namespace Practice
             if (isAdditionalMood && currentEntity.Type == "emptyEntity")
             {
                 elementaryEntity ent = new elementaryEntity();
-                ent.ReproductionChance = 500;
-                ent.Energy = 5000;
-                ent.EnergyForChild = 100;
-                ent.MaxLifeTime = 30;
+                ent.MaxLifeTime = SettingsWin.MaxLifeTime;
+                ent.EnergyForChild = SettingsWin.EnergyForChild;
+                ent.ReproductionChance = SettingsWin.ReproductionChance;
+                ent.EnergyForLife = SettingsWin.EnergyForLife;
+                ent.EnergyForMove = SettingsWin.EnergyForMove;
+                ent.Energy = SettingsWin.StartEnergy;
                 this.AddEntity(ent, (currentBox.Location.X - 200) / 10, currentBox.Location.Y / 10);
             }
             if (isDeletingMood)

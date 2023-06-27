@@ -15,6 +15,161 @@ namespace Practice
         public SettingsElementarySimulation()
         {
             InitializeComponent();
+
+            MaxLifeTimeTextBox.Text = Convert.ToString(MaxLifeTime);
+            EnergyForChildTextBox.Text = Convert.ToString(EnergyForChild);
+            ReproductionChanceTextBox.Text = Convert.ToString(ReproductionChance / 10);
+            EnergyForLifeTextBox.Text = Convert.ToString(EnergyForLife);
+            EnergyForMoveTextBox.Text = Convert.ToString(EnergyForMove);
+            StartEnergyTextBox.Text = Convert.ToString(StartEnergy);
+            FoodEnergyTextBox.Text = Convert.ToString(FoodEnergy);
+            FoodGenerationSpeedTextBox.Text = Convert.ToString(FoodGenerationSpeed);
+        }
+
+        public int MaxLifeTime { get; private set; } = 30;
+        public int EnergyForChild { get; private set; } = 15;
+        public int ReproductionChance { get; private set; } = 500;
+        public int EnergyForLife { get; private set; } = 1;
+        public int EnergyForMove { get; private set; } = 5;
+        public int StartEnergy { get; private set; } = 50;
+        public int FoodEnergy { get; private set; } = 20;
+        public int FoodGenerationSpeed { get; private set; } = 2;
+
+        private void MaxLifeTimeTextBox_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                int newLifeTime = Convert.ToInt32(MaxLifeTimeTextBox.Text);
+                if (newLifeTime < 0)
+                    throw new Exception();
+                MaxLifeTime = newLifeTime;
+            }
+            catch
+            {
+                MaxLifeTimeTextBox.Text = Convert.ToString(MaxLifeTime);
+            }
+        }
+
+        private void SettingsElementarySimulation_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.ActiveControl = null;
+        }
+
+        private void EnergyForChildTextBox_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                int newEnergy = Convert.ToInt32(EnergyForChildTextBox.Text);
+                if (newEnergy < 0)
+                    throw new Exception();
+                EnergyForChild = newEnergy;
+            }
+            catch
+            {
+                EnergyForChildTextBox.Text = Convert.ToString(EnergyForChild);
+            }
+        }
+
+        private void ReproductionChanceTextBox_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                int newChance = (int)(Convert.ToDouble(ReproductionChanceTextBox.Text) * 10);
+                if (newChance < 0 || newChance > 1000)
+                    throw new Exception();
+                ReproductionChance = newChance;
+                ReproductionChanceTextBox.Text = Convert.ToString(ReproductionChance / 10.0);
+            }
+            catch
+            {
+                ReproductionChanceTextBox.Text = Convert.ToString(ReproductionChance / 10);
+            }
+        }
+
+        private void EnergyForLifeTextBox_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                int newEnergy = Convert.ToInt32(EnergyForLifeTextBox.Text);
+                if (newEnergy < 0)
+                    throw new Exception();
+                EnergyForLife = newEnergy;
+            }
+            catch
+            {
+                EnergyForLifeTextBox.Text = Convert.ToString(EnergyForLife);
+            }
+        }
+
+        private void EnergyForMoveTextBox_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                int newEnergy = Convert.ToInt32(EnergyForMoveTextBox.Text);
+                if (newEnergy < 0)
+                    throw new Exception();
+                EnergyForMove = newEnergy;
+            }
+            catch
+            {
+                EnergyForMoveTextBox.Text = Convert.ToString(EnergyForMove);
+            }
+        }
+
+        private void StartEnergyTextBox_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                int newEnergy = Convert.ToInt32(StartEnergyTextBox.Text);
+                if (newEnergy < 0)
+                    throw new Exception();
+                StartEnergy = newEnergy;
+            }
+            catch
+            {
+                StartEnergyTextBox.Text = Convert.ToString(StartEnergy);
+            }
+        }
+
+        private void FoodEnergyTextBox_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                int newEnergy = Convert.ToInt32(FoodEnergyTextBox.Text);
+                if (newEnergy < 0)
+                    throw new Exception();
+                FoodEnergy = newEnergy;
+            }
+            catch
+            {
+                FoodEnergyTextBox.Text = Convert.ToString(FoodEnergy);
+            }
+        }
+
+        private void FoodGenerationSpeedTextBox_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                int newSpeed = Convert.ToInt32(FoodGenerationSpeedTextBox.Text);
+                if (newSpeed < 0)
+                    throw new Exception();
+                FoodGenerationSpeed = newSpeed;
+            }
+            catch
+            {
+                FoodGenerationSpeedTextBox.Text = Convert.ToString(FoodGenerationSpeed);
+            }
+        }
+
+        private void OKButton_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void SettingsElementarySimulation_Load(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.None;
         }
     }
 }
