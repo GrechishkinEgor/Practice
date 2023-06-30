@@ -60,7 +60,10 @@ namespace Practice
                 if (value == false)
                     fieldBitmapPictureBox.Visible = false;
                 else
+                {
+                    fieldBitmapPictureBox.Invalidate();
                     fieldBitmapPictureBox.Visible = true;
+                } 
                 enabledDrawing = value;
             }
         }
@@ -98,7 +101,9 @@ namespace Practice
                 else
                     this.ClearEntity(someEntity.X, someEntity.Y);
             }
-            fieldBitmapPictureBox.Invalidate();
+
+            if (enabledDrawing)
+                fieldBitmapPictureBox.Invalidate();
         }
 
         //Согласовать изображение c сущностью по координатам (х, у)
@@ -109,12 +114,12 @@ namespace Practice
                 case "elementaryEntity":
                     for (int i = x * 10; i < x * 10 + 10; i++)
                         for (int j = y * 10; j < y * 10 + 10; j++)
-                            fieldBitmap.SetPixel(i, j, Color.Green);
+                            fieldBitmap.SetPixel(i, j, Color.Orange);
                     break;
                 case "food":
                     for (int i = x * 10; i < x * 10 + 10; i++)
                         for (int j = y * 10; j < y * 10 + 10; j++)
-                            fieldBitmap.SetPixel(i, j, Color.Orange);
+                            fieldBitmap.SetPixel(i, j, Color.Green);
                     break;
                 case "emptyEntity":
                 default:
@@ -199,6 +204,8 @@ namespace Practice
 
         public override void AddEntity(entity newEntity, int x, int y)
         {
+            if (EntityMatrix[x, y].Type == "elementaryEntity")
+                ((elementaryEntity)EntityMatrix[x, y]).IsAlive = false;
             base.AddEntity(newEntity, x, y);
             HarmonizeEntityAndPicture(x, y);
             if (newEntity.Type == "elementaryEntity")
@@ -206,6 +213,8 @@ namespace Practice
         }
         public override void ClearEntity(int x, int y)
         {
+            if (EntityMatrix[x, y].Type == "elementaryEntity")
+                ((elementaryEntity)EntityMatrix[x, y]).IsAlive = false;
             base.ClearEntity(x, y);
             HarmonizeEntityAndPicture(x, y);
         }

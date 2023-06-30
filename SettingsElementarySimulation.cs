@@ -26,14 +26,14 @@ namespace Practice
             FoodGenerationSpeedTextBox.Text = Convert.ToString(FoodGenerationSpeed);
         }
 
-        public int MaxLifeTime { get; private set; } = 30;
-        public int EnergyForChild { get; private set; } = 15;
-        public int ReproductionChance { get; private set; } = 500;
+        public int MaxLifeTime { get; private set; } = 50;
+        public int EnergyForChild { get; private set; } = 60;
+        public int ReproductionChance { get; private set; } = 1000;
         public int EnergyForLife { get; private set; } = 1;
         public int EnergyForMove { get; private set; } = 5;
-        public int StartEnergy { get; private set; } = 50;
-        public int FoodEnergy { get; private set; } = 20;
-        public int FoodGenerationSpeed { get; private set; } = 2;
+        public int StartEnergy { get; private set; } = 250;
+        public int FoodEnergy { get; private set; } = 90;
+        public int FoodGenerationSpeed { get; private set; } = 30;
 
         private void MaxLifeTimeTextBox_Leave(object sender, EventArgs e)
         {

@@ -33,7 +33,7 @@ namespace Practice
                 {
                     WidthField = Convert.ToInt32(WidthTextBox.Text);
                     HeightField = Convert.ToInt32(HeightTextBox.Text);
-                    if (WidthField <= 0 || HeightField <= 0 || WidthField * HeightField > 5000)
+                    if (WidthField <= 0 || HeightField <= 0 || WidthField * HeightField > 10000)
                         throw new Exception();
                     this.DialogResult = DialogResult.OK;
                 }
@@ -44,7 +44,7 @@ namespace Practice
                     HeightTextBox.Text = "";
                     WidthField = 0;
                     HeightField = 0;
-                    MessageBox.Show("Значения ширины или высоты некорректны. \nВаше поле не должно быть больше 5000 клеток.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Значения ширины или высоты некорректны. \nВаше поле не должно быть больше 10000 клеток.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     e.Cancel = true;
                 }
             else
