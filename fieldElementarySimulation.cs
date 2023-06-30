@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,8 +9,6 @@ namespace Practice
 {
     internal class fieldElementarySimulation : field
     {
-        //Матрица изображений сущностей
-        public PictureBox[,] PictureMatrix { get; }
         //Определяет, работает ли отрисовка сущностей на экране
         protected bool enabledDrawing = true;
         //Очередь на обработку тактового действия
@@ -26,6 +25,11 @@ namespace Practice
         protected bool isDeletingMood = false;
         //Окно параметров сущностей
         public SettingsElementarySimulation SettingsWin { get; } = new SettingsElementarySimulation();
+
+        //Изображение симуляционного поля
+        protected Bitmap fieldBitmap;
+        protected PictureBox fieldBitmapPictureBox;
+        public PictureBox GetPicture { get => fieldBitmapPictureBox; }
 
         public bool IsDeletingMood
         {
@@ -54,17 +58,9 @@ namespace Practice
             set
             {
                 if (value == false)
-                    foreach(PictureBox image in PictureMatrix)
-                    {
-                        //image.Enabled = false;
-                        image.Visible = false;
-                    }
+                    fieldBitmapPictureBox.Visible = false;
                 else
-                    foreach (PictureBox image in PictureMatrix)
-                    {
-                        //image.Enabled = true;
-                        image.Visible = true;
-                    }
+                    fieldBitmapPictureBox.Visible = true;
                 enabledDrawing = value;
             }
         }
@@ -102,6 +98,7 @@ namespace Practice
                 else
                     this.ClearEntity(someEntity.X, someEntity.Y);
             }
+            fieldBitmapPictureBox.Invalidate();
         }
 
         //Согласовать изображение c сущностью по координатам (х, у)
@@ -110,15 +107,22 @@ namespace Practice
             switch(EntityMatrix[x,y].Type)
             {
                 case "elementaryEntity":
-                    PictureMatrix[x, y].BackColor = Color.Green;
+                    for (int i = x * 10; i < x * 10 + 10; i++)
+                        for (int j = y * 10; j < y * 10 + 10; j++)
+                            fieldBitmap.SetPixel(i, j, Color.Green);
                     break;
                 case "food":
-                    PictureMatrix[x, y].BackColor = Color.Orange;
+                    for (int i = x * 10; i < x * 10 + 10; i++)
+                        for (int j = y * 10; j < y * 10 + 10; j++)
+                            fieldBitmap.SetPixel(i, j, Color.Orange);
                     break;
                 case "emptyEntity":
                 default:
-                    PictureMatrix[x, y].BackColor = Color.White;
+                    for (int i = x * 10; i < x * 10 + 10; i++)
+                        for (int j = y * 10; j < y * 10 + 10; j++)
+                            fieldBitmap.SetPixel(i, j, Color.White);
                     break;
+                    
             }
         }
 
@@ -147,48 +151,50 @@ namespace Practice
         
         public fieldElementarySimulation(int width, int height) : base(width, height)
         {
-            PictureMatrix = new PictureBox[width, height];
+            fieldBitmap = new Bitmap(width * 10, height * 10);
+            fieldBitmapPictureBox = new PictureBox();
 
-            for (int i = 0; i < width; i++)
-                for (int j = 0; j < height; j++)
-                {
-                    PictureBox somePicture = new PictureBox();
-                    somePicture.BackColor = System.Drawing.SystemColors.Control;
-                    somePicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-                    somePicture.Location = new System.Drawing.Point(200 + i * 10, j * 10);
-                    somePicture.BackColor = Color.White;
-                    somePicture.Name = "PictureBox[" + Convert.ToString(i) + "][" + Convert.ToString(j) + "]";
-                    somePicture.Size = new System.Drawing.Size(10, 10);
-                    somePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-                    somePicture.TabIndex = 0;
-                    somePicture.TabStop = false;
-                    somePicture.MouseClick += this.EntityClick;
-
-                    PictureMatrix[i, j] = somePicture;
-                }
+            fieldBitmapPictureBox.Image = fieldBitmap;
+            fieldBitmapPictureBox.BackColor = System.Drawing.SystemColors.Control;
+            fieldBitmapPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            fieldBitmapPictureBox.Location = new System.Drawing.Point(200, 0);
+            fieldBitmapPictureBox.BackColor = Color.White;
+            fieldBitmapPictureBox.Name = "BitmapPictureBox";
+            fieldBitmapPictureBox.Size = new System.Drawing.Size(width * 10, height * 10);
+            fieldBitmapPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            fieldBitmapPictureBox.TabIndex = 0;
+            fieldBitmapPictureBox.TabStop = false;
+            fieldBitmapPictureBox.MouseClick += this.EntityClick;
         }
 
         //Обработчик события нажатия на сущность
         protected void EntityClick(object sender, MouseEventArgs e)
         {
-            PictureBox currentBox = (PictureBox)sender;
-            entity currentEntity = EntityMatrix[(currentBox.Location.X - 200) / 10, currentBox.Location.Y / 10];
-            if (isAdditionalMood && currentEntity.Type == "emptyEntity")
+            try
             {
-                elementaryEntity ent = new elementaryEntity();
-                ent.MaxLifeTime = SettingsWin.MaxLifeTime;
-                ent.EnergyForChild = SettingsWin.EnergyForChild;
-                ent.ReproductionChance = SettingsWin.ReproductionChance;
-                ent.EnergyForLife = SettingsWin.EnergyForLife;
-                ent.EnergyForMove = SettingsWin.EnergyForMove;
-                ent.Energy = SettingsWin.StartEnergy;
-                this.AddEntity(ent, (currentBox.Location.X - 200) / 10, currentBox.Location.Y / 10);
+                PictureBox currentBox = (PictureBox)sender;
+                entity currentEntity = EntityMatrix[e.X / 10, e.Y / 10];
+                if (isAdditionalMood && currentEntity.Type == "emptyEntity")
+                {
+                    elementaryEntity ent = new elementaryEntity();
+                    ent.MaxLifeTime = SettingsWin.MaxLifeTime;
+                    ent.EnergyForChild = SettingsWin.EnergyForChild;
+                    ent.ReproductionChance = SettingsWin.ReproductionChance;
+                    ent.EnergyForLife = SettingsWin.EnergyForLife;
+                    ent.EnergyForMove = SettingsWin.EnergyForMove;
+                    ent.Energy = SettingsWin.StartEnergy;
+                    this.AddEntity(ent, e.X / 10, e.Y / 10);
+                    fieldBitmapPictureBox.Invalidate();
+                }
+                if (isDeletingMood)
+                {
+                    emptyEntity ent = new emptyEntity();
+                    this.AddEntity(ent, e.X / 10, e.Y / 10);
+                    fieldBitmapPictureBox.Invalidate();
+                }
             }
-            if (isDeletingMood)
-            {
-                emptyEntity ent = new emptyEntity();
-                this.AddEntity(ent, (currentBox.Location.X - 200) / 10, currentBox.Location.Y / 10);
-            }
+            catch { }
+
         }
 
         public override void AddEntity(entity newEntity, int x, int y)

@@ -175,8 +175,8 @@
         private Button EntitySettingsButton;
         private Label ElemEntCountLabel;
         private Button AddEntityButton;
-        private Panel FieldPanel;
         private Button DeleteEntityButton;
         private Button DrawingButton;
+        private Panel FieldPanel;
     }
 }

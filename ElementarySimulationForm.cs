@@ -21,15 +21,9 @@ namespace Practice
             WidthAndHeightForm sizeWin = new WidthAndHeightForm();
             if (sizeWin.ShowDialog() == DialogResult.OK)
             {
-                WaitForm waitWin = new WaitForm();
-                waitWin.Show();
-
                 simField = new fieldElementarySimulation(sizeWin.WidthField, sizeWin.HeightField);
-                foreach (PictureBox pictureBox in simField.PictureMatrix)
-                    this.Controls.Add(pictureBox);
+                this.Controls.Add(simField.GetPicture);
                 FieldPanel.SendToBack();
-
-                waitWin.Close();
                 this.Show();
             }
             else
