@@ -60,14 +60,14 @@ namespace Practice
         }
         public override void AddEntity(entity newEntity, int x, int y)
         {
-            if (EntityMatrix[x, y].Type == "elementaryEntity" || EntityMatrix[x, y].Type == "Predator")
+            if (EntityMatrix[x, y].Type == "Herbivore" || EntityMatrix[x, y].Type == "Predator")
                 ((elementaryEntity)EntityMatrix[x, y]).IsAlive = false;
             EntityMatrix[x, y] = newEntity;
             newEntity.EntityBase = this;
             newEntity.X = x;
             newEntity.Y = y;
             HarmonizeEntityAndPicture(x, y);
-            if (newEntity.Type == "elementaryEntity" || newEntity.Type == "Predator")
+            if (newEntity.Type == "Herbivore" || newEntity.Type == "Predator")
                 beatQueue.Enqueue((elementaryEntity)newEntity);
             if (newEntity.Type == "Predator")
                 PredatorsCount++;
@@ -76,7 +76,7 @@ namespace Practice
         {
             switch (EntityMatrix[x, y].Type)
             {
-                case "elementaryEntity":
+                case "Herbivore":
                     for (int i = x * 10; i < x * 10 + 10; i++)
                         for (int j = y * 10; j < y * 10 + 10; j++)
                             fieldBitmap.SetPixel(i, j, Color.Orange);
@@ -117,7 +117,7 @@ namespace Practice
                     }
                     else
                     {
-                        ent = new elementaryEntity();
+                        ent = new Herbivore();
                         ent.Energy = SettingsWin.StartEnergy;
                         
                     }

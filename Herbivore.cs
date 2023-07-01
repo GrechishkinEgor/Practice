@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 
 namespace Practice
 {
-    internal class Predator : elementaryEntity
+    internal class Herbivore : elementaryEntity
     {
-
-        public Predator()
+        public Herbivore()
         {
-            Type = "Predator";
+            Type = "Herbivore";
         }
+
         public override void BeatAction()
         {
             SettingsPredatorSimulation settings = ((fieldPredator)entityBase).SettingsWin;
             lifeTime++;
-            energy = energy - settings.EnergyForLifePredator;
+            energy = energy - settings.EnergyForLife;
             if (energy <= 0)
             {
                 energy = 0;
                 IsAlive = false;
             }
-            if (lifeTime > settings.MaxLifeTimePredator)
+            if (lifeTime > settings.MaxLifeTime)
             {
                 IsAlive = false;
             }
@@ -34,13 +34,13 @@ namespace Practice
             Random randomizer = new Random();
 
             //Попытка размножения
-            int energyForReproduction = 3 * (settings.EnergyForLifePredator + settings.EnergyForMovePredator) + settings.EnergyForChildPredator;
+            int energyForReproduction = 3 * (settings.EnergyForLife + settings.EnergyForMove) + settings.EnergyForChild;
             if (energy > energyForReproduction &&
-                randomizer.Next(1000) + 1 <= settings.ReproductionChancePredator)
+                randomizer.Next(1000) + 1 <= settings.ReproductionChance)
             {
                 //Создание дочерней сущности
-                Predator child = new Predator();
-                child.energy = settings.EnergyForChildPredator;
+                Herbivore child = new Herbivore();
+                child.energy = settings.EnergyForChild;
 
                 //Попытки разместить дочернюю сущность на симуляционном поле
                 for (int i = 0; i < 16; i++)
@@ -54,7 +54,7 @@ namespace Practice
                         {
                             //Успешная попытка. Завершить тактовое действие
                             entityBase.AddEntity(child, this.x + vectorX, this.y + vectorY);
-                            this.energy -= settings.EnergyForChildPredator;
+                            this.energy -= settings.EnergyForChild;
                             return;
                         }
                     }
@@ -63,19 +63,17 @@ namespace Practice
 
             }
 
-            //Попытки съесть другое существо
+            //Попытки употребления еды
             for (int i = 0; i < 16; i++)
             {
                 vectorX = randomizer.Next(-1, 2);
                 vectorY = randomizer.Next(-1, 2);
                 try
                 {
-                    if (entityBase.EntityMatrix[this.x + vectorX, this.y + vectorY].Type == "Herbivore")
+                    if (entityBase.EntityMatrix[this.x + vectorX, this.y + vectorY].Type == "food")
                     {
                         //Успешная попытка. Завершить тактовое действие
-                        elementaryEntity eaten = (elementaryEntity)entityBase.EntityMatrix[this.x + vectorX, this.y + vectorY];
-                        this.energy += eaten.Energy;
-                        eaten.IsAlive = false;
+                        this.energy += settings.FoodEnergy;
                         entityBase.ClearEntity(this.x + vectorX, this.y + vectorY);
                         return;
                     }
@@ -94,7 +92,7 @@ namespace Practice
                     {
                         //Успешное перемещение и завершение тактового действия
                         entityBase.MoveEntity(x, y, x + vectorX, y + vectorY);
-                        this.energy -= settings.EnergyForMovePredator;
+                        this.energy -= settings.EnergyForMove;
                         return;
                     }
                 }
