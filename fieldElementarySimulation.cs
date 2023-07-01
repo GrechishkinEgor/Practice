@@ -15,10 +15,6 @@ namespace Practice
         protected Queue<elementaryEntity> beatQueue = new Queue<elementaryEntity>();
         //Количество элементарных сущностей на поле
         public int ElemEntCount { get => beatQueue.Count; }
-        //Количество еды на поле, которое генерируется каждый такт
-        protected int foodCount = 1;
-        //Энергетическая ценность еды
-        protected int foodEnergy = 20;
         //Включен ли режим добавления новых сущностей
         protected bool isAdditionalMood = false;
         //Включен ли режим удаления сущностей
@@ -41,16 +37,7 @@ namespace Practice
             get => isAdditionalMood;
             set => isAdditionalMood = value;
         }
-        public int FoodCount
-        {
-            get => foodCount;
-            set { if (value >= 0) foodCount = value; }
-        }
-        public int FoodEnergy
-        {
-            get => foodEnergy;
-            set { if (value >= 0) foodEnergy = value; }
-        }
+
         //Работает или нет отрисовка сущностей
         public bool EnabledDrawing 
         {
@@ -83,7 +70,7 @@ namespace Practice
                     if (EntityMatrix[x,y].Type == "emptyEntity")
                     {
                         food newFood = new food();
-                        newFood.Energy = this.foodEnergy;
+                        newFood.Energy = this.SettingsWin.FoodEnergy;
                         this.AddEntity(newFood, x, y);
                         break;
                     }
