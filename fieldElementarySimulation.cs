@@ -70,7 +70,6 @@ namespace Practice
                     if (EntityMatrix[x,y].Type == "emptyEntity")
                     {
                         food newFood = new food();
-                        newFood.Energy = this.SettingsWin.FoodEnergy;
                         this.AddEntity(newFood, x, y);
                         break;
                     }
@@ -94,7 +93,7 @@ namespace Practice
         }
 
         //Согласовать изображение c сущностью по координатам (х, у)
-        private void HarmonizeEntityAndPicture(int x, int y)
+        protected virtual void HarmonizeEntityAndPicture(int x, int y)
         {
             switch(EntityMatrix[x,y].Type)
             {
@@ -117,29 +116,6 @@ namespace Practice
                     
             }
         }
-
-        public void UpdateEntitySettings()
-        {
-            foreach(entity ent in EntityMatrix)
-            {
-                switch (ent.Type)
-                {
-                    case "elementaryEntity":
-                        ((elementaryEntity)ent).MaxLifeTime = SettingsWin.MaxLifeTime;
-                        ((elementaryEntity)ent).EnergyForChild = SettingsWin.EnergyForChild;
-                        ((elementaryEntity)ent).ReproductionChance = SettingsWin.ReproductionChance;
-                        ((elementaryEntity)ent).EnergyForLife = SettingsWin.EnergyForLife;
-                        ((elementaryEntity)ent).EnergyForMove = SettingsWin.EnergyForMove;
-                        break;
-                    case "food":
-                        ((food)ent).Energy = SettingsWin.FoodEnergy;
-                        break;
-                    case "emptyEntity":
-                    default:
-                        break;
-                }
-            }
-        }
         
         public fieldElementarySimulation(int width, int height) : base(width, height)
         {
@@ -160,7 +136,7 @@ namespace Practice
         }
 
         //Обработчик события нажатия на сущность
-        protected void EntityClick(object sender, MouseEventArgs e)
+        protected virtual void EntityClick(object sender, MouseEventArgs e)
         {
             try
             {
@@ -169,11 +145,6 @@ namespace Practice
                 if (isAdditionalMood && currentEntity.Type == "emptyEntity")
                 {
                     elementaryEntity ent = new elementaryEntity();
-                    ent.MaxLifeTime = SettingsWin.MaxLifeTime;
-                    ent.EnergyForChild = SettingsWin.EnergyForChild;
-                    ent.ReproductionChance = SettingsWin.ReproductionChance;
-                    ent.EnergyForLife = SettingsWin.EnergyForLife;
-                    ent.EnergyForMove = SettingsWin.EnergyForMove;
                     ent.Energy = SettingsWin.StartEnergy;
                     this.AddEntity(ent, e.X / 10, e.Y / 10);
                     fieldBitmapPictureBox.Invalidate();

@@ -154,10 +154,7 @@ namespace Practice
 
         private void EntitySettingsButton_Click(object sender, EventArgs e)
         {
-            if (simField.SettingsWin.ShowDialog() == DialogResult.OK)
-            {
-                simField.UpdateEntitySettings();
-            }
+            simField.SettingsWin.ShowDialog();
         }
     }
 }

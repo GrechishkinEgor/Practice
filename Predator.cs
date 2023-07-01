@@ -6,16 +6,11 @@ using System.Threading.Tasks;
 
 namespace Practice
 {
-    internal class food : entity
+    internal class Predator : elementaryEntity
     {
         public override void BeatAction()
         {
-            //Еда ничего не делает
-        }
-
-        public food()
-        {
-            Type = "food";
+            
         }
     }
 }

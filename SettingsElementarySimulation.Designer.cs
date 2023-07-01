@@ -235,7 +235,7 @@
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(297, 23);
             this.OKButton.TabIndex = 2;
-            this.OKButton.Text = "Применить к уже созданным сущностям";
+            this.OKButton.Text = "Применить";
             this.OKButton.UseVisualStyleBackColor = true;
             this.OKButton.Click += new System.EventHandler(this.OKButton_Click);
             // 

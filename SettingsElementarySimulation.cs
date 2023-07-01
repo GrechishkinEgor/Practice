@@ -42,7 +42,7 @@ namespace Practice
                 int newLifeTime = Convert.ToInt32(MaxLifeTimeTextBox.Text);
                 if (newLifeTime < 0)
                     throw new Exception();
-                MaxLifeTime = newLifeTime;
+                //MaxLifeTime = newLifeTime;
             }
             catch
             {
@@ -62,7 +62,7 @@ namespace Practice
                 int newEnergy = Convert.ToInt32(EnergyForChildTextBox.Text);
                 if (newEnergy < 0)
                     throw new Exception();
-                EnergyForChild = newEnergy;
+                //EnergyForChild = newEnergy;
             }
             catch
             {
@@ -77,8 +77,8 @@ namespace Practice
                 int newChance = (int)(Convert.ToDouble(ReproductionChanceTextBox.Text) * 10);
                 if (newChance < 0 || newChance > 1000)
                     throw new Exception();
-                ReproductionChance = newChance;
-                ReproductionChanceTextBox.Text = Convert.ToString(ReproductionChance / 10.0);
+                //ReproductionChance = newChance;
+                ReproductionChanceTextBox.Text = Convert.ToString(newChance / 10.0);
             }
             catch
             {
@@ -93,7 +93,7 @@ namespace Practice
                 int newEnergy = Convert.ToInt32(EnergyForLifeTextBox.Text);
                 if (newEnergy < 0)
                     throw new Exception();
-                EnergyForLife = newEnergy;
+                //EnergyForLife = newEnergy;
             }
             catch
             {
@@ -108,7 +108,7 @@ namespace Practice
                 int newEnergy = Convert.ToInt32(EnergyForMoveTextBox.Text);
                 if (newEnergy < 0)
                     throw new Exception();
-                EnergyForMove = newEnergy;
+                //EnergyForMove = newEnergy;
             }
             catch
             {
@@ -123,7 +123,7 @@ namespace Practice
                 int newEnergy = Convert.ToInt32(StartEnergyTextBox.Text);
                 if (newEnergy < 0)
                     throw new Exception();
-                StartEnergy = newEnergy;
+                //StartEnergy = newEnergy;
             }
             catch
             {
@@ -138,7 +138,7 @@ namespace Practice
                 int newEnergy = Convert.ToInt32(FoodEnergyTextBox.Text);
                 if (newEnergy < 0)
                     throw new Exception();
-                FoodEnergy = newEnergy;
+                //FoodEnergy = newEnergy;
             }
             catch
             {
@@ -153,7 +153,7 @@ namespace Practice
                 int newSpeed = Convert.ToInt32(FoodGenerationSpeedTextBox.Text);
                 if (newSpeed < 0)
                     throw new Exception();
-                FoodGenerationSpeed = newSpeed;
+                //FoodGenerationSpeed = newSpeed;
             }
             catch
             {
@@ -164,12 +164,28 @@ namespace Practice
         private void OKButton_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
+            MaxLifeTime = Convert.ToInt32(MaxLifeTimeTextBox.Text);
+            EnergyForChild = Convert.ToInt32(EnergyForChildTextBox.Text);
+            ReproductionChance = (int)(Convert.ToDouble(ReproductionChanceTextBox.Text) * 10);
+            EnergyForLife = Convert.ToInt32(EnergyForLifeTextBox.Text);
+            EnergyForMove = Convert.ToInt32(EnergyForMoveTextBox.Text);
+            StartEnergy = Convert.ToInt32(StartEnergyTextBox.Text);
+            FoodEnergy = Convert.ToInt32(FoodEnergyTextBox.Text);
+            FoodGenerationSpeed = Convert.ToInt32(FoodGenerationSpeedTextBox.Text);
             this.Close();
         }
 
         private void SettingsElementarySimulation_Load(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.None;
+            MaxLifeTimeTextBox.Text = Convert.ToString(MaxLifeTime);
+            EnergyForChildTextBox.Text = Convert.ToString(EnergyForChild);
+            ReproductionChanceTextBox.Text = Convert.ToString(ReproductionChance / 10);
+            EnergyForLifeTextBox.Text = Convert.ToString(EnergyForLife);
+            EnergyForMoveTextBox.Text = Convert.ToString(EnergyForMove);
+            StartEnergyTextBox.Text = Convert.ToString(StartEnergy);
+            FoodEnergyTextBox.Text = Convert.ToString(FoodEnergy);
+            FoodGenerationSpeedTextBox.Text = Convert.ToString(FoodGenerationSpeed);
         }
     }
 }
