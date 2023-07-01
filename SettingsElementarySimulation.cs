@@ -161,7 +161,7 @@ namespace Practice
             }
         }
 
-        private void OKButton_Click(object sender, EventArgs e)
+        protected void OKButton_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
             MaxLifeTime = Convert.ToInt32(MaxLifeTimeTextBox.Text);

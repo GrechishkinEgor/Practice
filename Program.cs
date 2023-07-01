@@ -22,7 +22,9 @@ namespace Practice
                 case "Ёлементарна€ симул€ци€":
                     ElementarySimulationForm simForm = new ElementarySimulationForm();
                     break;
-
+                case "—имул€ци€ хищников":
+                    PredatorSimulationForm simForm1 = new PredatorSimulationForm();
+                    break;
                 case "":
                 case null:
                 default:

@@ -262,24 +262,24 @@
 
         #endregion
 
-        private GroupBox ElementaryEntityGroupBox;
-        private Label MaxLifeTimeLabel;
-        private TextBox StartEnergyTextBox;
-        private Label StartEnergyLabel;
-        private TextBox EnergyForMoveTextBox;
-        private Label EnergyForMoveLabel;
-        private TextBox EnergyForLifeTextBox;
-        private Label EnergyForLifeLabel;
-        private TextBox ReproductionChanceTextBox;
-        private Label ReproductionChanceLabel;
-        private TextBox EnergyForChildTextBox;
-        private Label EnergyForChildLabel;
-        private TextBox MaxLifeTimeTextBox;
-        private GroupBox FoodGroupBox;
-        private TextBox FoodGenerationSpeedTextBox;
-        private Label GenerationSpeedLabel;
-        private TextBox FoodEnergyTextBox;
-        private Label FoodEnergyLabel;
-        private Button OKButton;
+        protected GroupBox ElementaryEntityGroupBox;
+        protected Label MaxLifeTimeLabel;
+        protected TextBox StartEnergyTextBox;
+        protected Label StartEnergyLabel;
+        protected TextBox EnergyForMoveTextBox;
+        protected Label EnergyForMoveLabel;
+        protected TextBox EnergyForLifeTextBox;
+        protected Label EnergyForLifeLabel;
+        protected TextBox ReproductionChanceTextBox;
+        protected Label ReproductionChanceLabel;
+        protected TextBox EnergyForChildTextBox;
+        protected Label EnergyForChildLabel;
+        protected TextBox MaxLifeTimeTextBox;
+        protected GroupBox FoodGroupBox;
+        protected TextBox FoodGenerationSpeedTextBox;
+        protected Label GenerationSpeedLabel;
+        protected TextBox FoodEnergyTextBox;
+        protected Label FoodEnergyLabel;
+        protected Button OKButton;
     }
 }
