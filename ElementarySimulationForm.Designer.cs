@@ -66,6 +66,7 @@
             this.DrawingButton.TabIndex = 6;
             this.DrawingButton.Text = "Выключить отрисовку";
             this.DrawingButton.UseVisualStyleBackColor = true;
+            this.DrawingButton.Visible = false;
             this.DrawingButton.Click += new System.EventHandler(this.DrawingButton_Click);
             // 
             // DeleteEntityButton

@@ -21,16 +21,59 @@ namespace Practice
 
         public override void ClearEntity(int x, int y)
         {
-            if (((Competitor)EntityMatrix[x, y]).IsSecondKind)
-                secondKindCount--;
-            else
-                firstKindCount--;
-            ((Competitor)EntityMatrix[x, y]).IsAlive = false;
+            if (EntityMatrix[x,y].Type == "Competitor")
+            {
+                if (((Competitor)EntityMatrix[x, y]).IsSecondKind)
+                    secondKindCount--;
+                else
+                    firstKindCount--;
+                ((Competitor)EntityMatrix[x, y]).IsAlive = false;
+            }
             EntityMatrix[x, y] = new emptyEntity();
             EntityMatrix[x, y].EntityBase = this;
             EntityMatrix[x, y].X = x;
             EntityMatrix[x, y].Y = y;
             HarmonizeEntityAndPicture(x, y);
+        }
+
+        public override void DoBeat()
+        {
+            //Генерация еды
+            Random randomizer = new Random();
+            int x, y;
+            for (int i = 0; i < SettingsWin.FoodGenerationSpeed; i++)
+            {
+                //Попытка сгенерировать очередную еду
+                for (int j = 0; j < 16; j++)
+                {
+                    x = randomizer.Next(Width);
+                    y = randomizer.Next(Height);
+                    if (EntityMatrix[x, y].Type == "emptyEntity")
+                    {
+                        food newFood = new food();
+                        this.AddEntity(newFood, x, y);
+                        break;
+                    }
+                }
+            }
+
+            //Обработка тактовых действий сущностей
+            int queueLength = beatQueue.Count;
+            for (int i = 0; i < queueLength; i++)
+            {
+                elementaryEntity someEntity = beatQueue.Dequeue();
+                if (someEntity.IsAlive)
+                {
+                    someEntity.BeatAction();
+                    if (someEntity.IsAlive)
+                        beatQueue.Enqueue(someEntity);
+                    else
+                        this.ClearEntity(someEntity.X, someEntity.Y);
+                }
+            }
+
+            if (enabledDrawing)
+                fieldBitmapPictureBox.Invalidate();
         }
         public override void AddEntity(entity newEntity, int x, int y)
         {

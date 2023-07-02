@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.SettingsPanel = new System.Windows.Forms.Panel();
+            this.HerbivoreCountLabel = new System.Windows.Forms.Label();
+            this.PredatorsCountLabel = new System.Windows.Forms.Label();
             this.ElemEntCountLabel = new System.Windows.Forms.Label();
             this.DrawingButton = new System.Windows.Forms.Button();
             this.DeleteEntityButton = new System.Windows.Forms.Button();
@@ -39,8 +41,6 @@
             this.SimRunButton = new System.Windows.Forms.Button();
             this.FieldPanel = new System.Windows.Forms.Panel();
             this.Beat = new System.Windows.Forms.Timer(this.components);
-            this.PredatorsCountLabel = new System.Windows.Forms.Label();
-            this.HerbivoreCountLabel = new System.Windows.Forms.Label();
             this.SettingsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,6 +62,24 @@
             this.SettingsPanel.Size = new System.Drawing.Size(200, 370);
             this.SettingsPanel.TabIndex = 0;
             // 
+            // HerbivoreCountLabel
+            // 
+            this.HerbivoreCountLabel.AutoSize = true;
+            this.HerbivoreCountLabel.Location = new System.Drawing.Point(12, 242);
+            this.HerbivoreCountLabel.Name = "HerbivoreCountLabel";
+            this.HerbivoreCountLabel.Size = new System.Drawing.Size(76, 15);
+            this.HerbivoreCountLabel.TabIndex = 9;
+            this.HerbivoreCountLabel.Text = "Травоядные:";
+            // 
+            // PredatorsCountLabel
+            // 
+            this.PredatorsCountLabel.AutoSize = true;
+            this.PredatorsCountLabel.Location = new System.Drawing.Point(12, 218);
+            this.PredatorsCountLabel.Name = "PredatorsCountLabel";
+            this.PredatorsCountLabel.Size = new System.Drawing.Size(62, 15);
+            this.PredatorsCountLabel.TabIndex = 8;
+            this.PredatorsCountLabel.Text = "Хищники:";
+            // 
             // ElemEntCountLabel
             // 
             this.ElemEntCountLabel.AutoSize = true;
@@ -79,6 +97,7 @@
             this.DrawingButton.TabIndex = 7;
             this.DrawingButton.Text = "Выключить отрисовку";
             this.DrawingButton.UseVisualStyleBackColor = true;
+            this.DrawingButton.Visible = false;
             // 
             // DeleteEntityButton
             // 
@@ -143,24 +162,6 @@
             // 
             this.Beat.Interval = 500;
             this.Beat.Tick += new System.EventHandler(this.Beat_Tick);
-            // 
-            // PredatorsCountLabel
-            // 
-            this.PredatorsCountLabel.AutoSize = true;
-            this.PredatorsCountLabel.Location = new System.Drawing.Point(12, 218);
-            this.PredatorsCountLabel.Name = "PredatorsCountLabel";
-            this.PredatorsCountLabel.Size = new System.Drawing.Size(62, 15);
-            this.PredatorsCountLabel.TabIndex = 8;
-            this.PredatorsCountLabel.Text = "Хищники:";
-            // 
-            // HerbivoreCountLabel
-            // 
-            this.HerbivoreCountLabel.AutoSize = true;
-            this.HerbivoreCountLabel.Location = new System.Drawing.Point(12, 242);
-            this.HerbivoreCountLabel.Name = "HerbivoreCountLabel";
-            this.HerbivoreCountLabel.Size = new System.Drawing.Size(76, 15);
-            this.HerbivoreCountLabel.TabIndex = 9;
-            this.HerbivoreCountLabel.Text = "Травоядные:";
             // 
             // PredatorSimulationForm
             // 

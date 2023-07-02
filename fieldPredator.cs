@@ -16,6 +16,45 @@ namespace Practice
         }
         public int PredatorsCount { get; protected set; } = 0;
 
+        public override void DoBeat()
+        {
+            //Генерация еды
+            Random randomizer = new Random();
+            int x, y;
+            for (int i = 0; i < SettingsWin.FoodGenerationSpeed; i++)
+            {
+                //Попытка сгенерировать очередную еду
+                for (int j = 0; j < 16; j++)
+                {
+                    x = randomizer.Next(Width);
+                    y = randomizer.Next(Height);
+                    if (EntityMatrix[x, y].Type == "emptyEntity")
+                    {
+                        food newFood = new food();
+                        this.AddEntity(newFood, x, y);
+                        break;
+                    }
+                }
+            }
+
+            //Обработка тактовых действий сущностей
+            int queueLength = beatQueue.Count;
+            for (int i = 0; i < queueLength; i++)
+            {
+                elementaryEntity someEntity = beatQueue.Dequeue();
+                if (someEntity.IsAlive)
+                {
+                    someEntity.BeatAction();
+                    if (someEntity.IsAlive)
+                        beatQueue.Enqueue(someEntity);
+                    else
+                        this.ClearEntity(someEntity.X, someEntity.Y);
+                }
+            }
+
+            if (enabledDrawing)
+                fieldBitmapPictureBox.Invalidate();
+        }
         public override void ClearEntity(int x, int y)
         {
             if (EntityMatrix[x, y].Type == "Predator")
