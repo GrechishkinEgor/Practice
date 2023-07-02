@@ -41,11 +41,14 @@ namespace Practice
             for (int i = 0; i < queueLength; i++)
             {
                 elementaryEntity someEntity = beatQueue.Dequeue();
-                someEntity.BeatAction();
                 if (someEntity.IsAlive)
-                    beatQueue.Enqueue(someEntity);
-                else
-                    this.ClearEntity(someEntity.X, someEntity.Y);
+                {
+                    someEntity.BeatAction();
+                    if (someEntity.IsAlive)
+                        beatQueue.Enqueue(someEntity);
+                    else
+                        this.ClearEntity(someEntity.X, someEntity.Y);
+                }
             }
 
             if (enabledDrawing)
@@ -55,8 +58,17 @@ namespace Practice
         public override void ClearEntity(int x, int y)
         {
             if (EntityMatrix[x, y].Type == "Predator")
+            {
                 PredatorsCount--;
-            base.ClearEntity(x, y);
+                ((Predator)EntityMatrix[x, y]).IsAlive = false;
+            }
+            if (EntityMatrix[x, y].Type == "Herbivore")
+                ((Herbivore)EntityMatrix[x, y]).IsAlive = false;
+            EntityMatrix[x, y] = new emptyEntity();
+            EntityMatrix[x, y].EntityBase = this;
+            EntityMatrix[x, y].X = x;
+            EntityMatrix[x, y].Y = y;
+            HarmonizeEntityAndPicture(x, y);
         }
         public override void AddEntity(entity newEntity, int x, int y)
         {

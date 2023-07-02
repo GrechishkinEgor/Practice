@@ -142,7 +142,7 @@ namespace Practice
             {
                 PictureBox currentBox = (PictureBox)sender;
                 entity currentEntity = EntityMatrix[e.X / 10, e.Y / 10];
-                if (isAdditionalMood && currentEntity.Type == "emptyEntity")
+                if (isAdditionalMood)
                 {
                     elementaryEntity ent = new elementaryEntity();
                     ent.Energy = SettingsWin.StartEnergy;
@@ -164,7 +164,10 @@ namespace Practice
         {
             if (EntityMatrix[x, y].Type == "elementaryEntity")
                 ((elementaryEntity)EntityMatrix[x, y]).IsAlive = false;
-            base.AddEntity(newEntity, x, y);
+            EntityMatrix[x, y] = newEntity;
+            newEntity.EntityBase = this;
+            newEntity.X = x;
+            newEntity.Y = y;
             HarmonizeEntityAndPicture(x, y);
             if (newEntity.Type == "elementaryEntity")
                 beatQueue.Enqueue((elementaryEntity)newEntity);
@@ -173,12 +176,21 @@ namespace Practice
         {
             if (EntityMatrix[x, y].Type == "elementaryEntity")
                 ((elementaryEntity)EntityMatrix[x, y]).IsAlive = false;
-            base.ClearEntity(x, y);
+            EntityMatrix[x, y] = new emptyEntity();
+            EntityMatrix[x, y].EntityBase = this;
+            EntityMatrix[x, y].X = x;
+            EntityMatrix[x, y].Y = y;
             HarmonizeEntityAndPicture(x, y);
         }
         public override void MoveEntity(int oldX, int oldY, int newX, int newY)
         {
-            base.MoveEntity(oldX, oldY, newX, newY);
+            EntityMatrix[newX, newY] = EntityMatrix[oldX, oldY];
+            EntityMatrix[newX, newY].X = newX;
+            EntityMatrix[newX, newY].Y = newY;
+            EntityMatrix[oldX, oldY] = new emptyEntity();
+            EntityMatrix[oldX, oldY].EntityBase = this;
+            EntityMatrix[oldX, oldY].X = oldX;
+            EntityMatrix[oldX, oldY].Y = oldY;
             HarmonizeEntityAndPicture(oldX, oldY);
             HarmonizeEntityAndPicture(newX, newY);
         }
