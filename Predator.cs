@@ -84,7 +84,7 @@ namespace Practice
             }
 
             //Попытки найти подходящую для перемещения клетку
-            for (int i = 0; i < 16 && this.energy - settings.EnergyForMove > 0; i++)
+            for (int i = 0; i < 16 && this.energy - settings.EnergyForMovePredator > 0; i++)
             {
                 vectorX = randomizer.Next(-1, 2);
                 vectorY = randomizer.Next(-1, 2);

@@ -38,8 +38,8 @@
             // 
             this.ChosenSimulationBox.FormattingEnabled = true;
             this.ChosenSimulationBox.Items.AddRange(new object[] {
-            "Элементарная симуляция",
-            "Симуляция хищников"});
+            "Симуляция хищников",
+            "Симуляция конкуренции"});
             this.ChosenSimulationBox.Location = new System.Drawing.Point(12, 141);
             this.ChosenSimulationBox.Name = "ChosenSimulationBox";
             this.ChosenSimulationBox.Size = new System.Drawing.Size(251, 23);

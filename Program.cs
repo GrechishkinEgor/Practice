@@ -25,10 +25,13 @@ namespace Practice
                 case "Симуляция хищников":
                     PredatorSimulationForm simForm1 = new PredatorSimulationForm();
                     break;
+                case "Симуляция конкуренции":
+                    CompetitionSimulationForm simForm2 = new CompetitionSimulationForm();
+                    break;
                 case "":
                 case null:
                 default:
-                    Application.Exit();
+                    helloForm.Show();
                     break;
             }
         }

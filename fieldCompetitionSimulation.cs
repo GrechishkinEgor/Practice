@@ -6,25 +6,26 @@ using System.Threading.Tasks;
 
 namespace Practice
 {
-    internal class fieldPredator : fieldElementarySimulation
+    internal class fieldCompetitionSimulation : fieldElementarySimulation
     {
-        new public SettingsPredatorSimulation SettingsWin { get; } = new SettingsPredatorSimulation();
-        public bool IsPredatorAdded { get; set; } = false;
-        public fieldPredator(int width, int height) : base(width, height)
+        new public SettingsCompetitionSimulation SettingsWin { get; } = new SettingsCompetitionSimulation();
+        public bool IsSecondKindAdded { get; set;} = false;
+        protected int firstKindCount = 0;
+        public int FirstKindCount { get => firstKindCount; }
+        protected int secondKindCount = 0;
+        public int SecondKindCount { get => secondKindCount; }
+        public fieldCompetitionSimulation(int width, int height) : base(width, height)
         {
 
         }
-        public int PredatorsCount { get; protected set; } = 0;
 
         public override void ClearEntity(int x, int y)
         {
-            if (EntityMatrix[x, y].Type == "Predator")
-            {
-                PredatorsCount--;
-                ((Predator)EntityMatrix[x, y]).IsAlive = false;
-            }
-            if (EntityMatrix[x, y].Type == "Herbivore")
-                ((Herbivore)EntityMatrix[x, y]).IsAlive = false;
+            if (((Competitor)EntityMatrix[x, y]).IsSecondKind)
+                secondKindCount--;
+            else
+                firstKindCount--;
+            ((Competitor)EntityMatrix[x, y]).IsAlive = false;
             EntityMatrix[x, y] = new emptyEntity();
             EntityMatrix[x, y].EntityBase = this;
             EntityMatrix[x, y].X = x;
@@ -33,36 +34,40 @@ namespace Practice
         }
         public override void AddEntity(entity newEntity, int x, int y)
         {
-            if (EntityMatrix[x, y].Type == "Herbivore" || EntityMatrix[x, y].Type == "Predator")
-                ((elementaryEntity)EntityMatrix[x, y]).IsAlive = false;
+            if (EntityMatrix[x, y].Type == "Competitor")
+                ((Competitor)EntityMatrix[x, y]).IsAlive = false;
             EntityMatrix[x, y] = newEntity;
             newEntity.EntityBase = this;
             newEntity.X = x;
             newEntity.Y = y;
             HarmonizeEntityAndPicture(x, y);
-            if (newEntity.Type == "Herbivore" || newEntity.Type == "Predator")
+            if (newEntity.Type == "Competitor")
+            {
                 beatQueue.Enqueue((elementaryEntity)newEntity);
-            if (newEntity.Type == "Predator")
-                PredatorsCount++;
+                if (((Competitor)newEntity).IsSecondKind)
+                    secondKindCount++;
+                else
+                    firstKindCount++;
+            }
         }
         protected override void HarmonizeEntityAndPicture(int x, int y)
         {
             switch (EntityMatrix[x, y].Type)
             {
-                case "Herbivore":
-                    for (int i = x * 10; i < x * 10 + 10; i++)
-                        for (int j = y * 10; j < y * 10 + 10; j++)
-                            fieldBitmap.SetPixel(i, j, Color.Orange);
+                case "Competitor":
+                    if (((Competitor)EntityMatrix[x, y]).IsSecondKind)
+                        for (int i = x * 10; i < x * 10 + 10; i++)
+                            for (int j = y * 10; j < y * 10 + 10; j++)
+                                fieldBitmap.SetPixel(i, j, Color.DeepPink);
+                    else
+                        for (int i = x * 10; i < x * 10 + 10; i++)
+                            for (int j = y * 10; j < y * 10 + 10; j++)
+                                fieldBitmap.SetPixel(i, j, Color.Orange);
                     break;
                 case "food":
                     for (int i = x * 10; i < x * 10 + 10; i++)
                         for (int j = y * 10; j < y * 10 + 10; j++)
                             fieldBitmap.SetPixel(i, j, Color.Green);
-                    break;
-                case "Predator":
-                    for (int i = x * 10; i < x * 10 + 10; i++)
-                        for (int j = y * 10; j < y * 10 + 10; j++)
-                            fieldBitmap.SetPixel(i, j, Color.Brown);
                     break;
                 case "emptyEntity":
                 default:
@@ -82,17 +87,16 @@ namespace Practice
                 entity currentEntity = EntityMatrix[e.X / 10, e.Y / 10];
                 if (isAdditionalMood && currentEntity.Type == "emptyEntity")
                 {
-                    elementaryEntity ent;
-                    if (IsPredatorAdded)
+                    elementaryEntity ent = new Competitor();
+                    if (IsSecondKindAdded)
                     {
-                        ent = new Predator();
-                        ent.Energy = SettingsWin.StartEnergyPredator;
+                        ent.Energy = SettingsWin.StartEnergySecondKind;
+                        ((Competitor)ent).IsSecondKind = true;
                     }
                     else
                     {
-                        ent = new Herbivore();
                         ent.Energy = SettingsWin.StartEnergy;
-                        
+                        ((Competitor)ent).IsSecondKind = false;
                     }
                     this.AddEntity(ent, e.X / 10, e.Y / 10);
                     fieldBitmapPictureBox.Invalidate();

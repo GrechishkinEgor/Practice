@@ -81,11 +81,14 @@ namespace Practice
             for (int i = 0; i < queueLength; i++)
             {
                 elementaryEntity someEntity = beatQueue.Dequeue();
-                someEntity.BeatAction();
                 if (someEntity.IsAlive)
-                    beatQueue.Enqueue(someEntity);
-                else
-                    this.ClearEntity(someEntity.X, someEntity.Y);
+                {
+                    someEntity.BeatAction();
+                    if (someEntity.IsAlive)
+                        beatQueue.Enqueue(someEntity);
+                    else
+                        this.ClearEntity(someEntity.X, someEntity.Y);
+                }
             }
 
             if (enabledDrawing)
